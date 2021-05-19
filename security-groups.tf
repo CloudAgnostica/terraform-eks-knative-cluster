@@ -9,7 +9,24 @@ resource "aws_security_group" "worker_group_mgmt_one" {
     protocol  = "tcp"
 
     cidr_blocks = [
-      "10.0.0.0/8",
+      "10.100.24.0/21",
+      "97.82.133.242/32"
+    ]
+  }
+}
+
+resource "aws_security_group" "worker_group_http_one" {
+  name_prefix = "worker_group_mgmt_one"
+  vpc_id      = module.vpc.vpc_id
+
+  ingress {
+    from_port = 80
+    to_port   = 80
+    protocol  = "tcp"
+
+    cidr_blocks = [
+      "10.100.24.0/21",
+      "97.82.133.242/32"
     ]
   }
 }
@@ -24,7 +41,24 @@ resource "aws_security_group" "worker_group_mgmt_two" {
     protocol  = "tcp"
 
     cidr_blocks = [
-      "192.168.0.0/16",
+      "10.100.24.0/21",
+      "97.82.133.242/32"
+    ]
+  }
+}
+
+resource "aws_security_group" "worker_group_http_two" {
+  name_prefix = "worker_group_mgmt_one"
+  vpc_id      = module.vpc.vpc_id
+
+  ingress {
+    from_port = 80
+    to_port   = 80
+    protocol  = "tcp"
+
+    cidr_blocks = [
+      "10.100.24.0/21",
+      "97.82.133.242/32"
     ]
   }
 }
@@ -39,9 +73,9 @@ resource "aws_security_group" "all_worker_mgmt" {
     protocol  = "tcp"
 
     cidr_blocks = [
-      "10.0.0.0/8",
-      "172.16.0.0/12",
-      "192.168.0.0/16",
+      "10.100.24.0/21",
+      "97.82.133.242/32",
+      "192.168.4.0/26",
     ]
   }
 }
