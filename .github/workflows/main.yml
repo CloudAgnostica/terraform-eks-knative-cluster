@@ -1,31 +1,20 @@
-# This is a basic workflow to help you get started with Actions
-
-name: merge upstream branches
-
-# Controls when the action will run. 
+name: Scheduled Merge Remote Action
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
   schedule:
     - cron: '5 4 * * *'
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  merge:
-    # The type of runner that the job will run on
+  merge-upstream:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-
-      - name: Merge upstream
-        run: |
-          echo TODO
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: master             # set the branch to merge to
+          fetch-depth: 0
+      - name: Merge Upstream
+        uses: exions/merge-upstream@v1
+        with:
+          upstream: https://github.com/hashicorp/learn-terraform-provision-eks-cluster.git      # set the upstream repo
+          upstream-branch: master   # set the upstream branch to merge from
+          branch: master          # set the branch to merge to
