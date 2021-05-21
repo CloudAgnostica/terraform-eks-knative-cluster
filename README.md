@@ -26,6 +26,13 @@ aws eks --region $(terraform output -raw region) update-kubeconfig --name $(terr
 
 ```
 
+
+## Spot implementation
+
+```
+./price_introspection.sh
+```
+
 ## CI/CD deletion pipeline
 
  - Delete ALB, IGW, SGs,

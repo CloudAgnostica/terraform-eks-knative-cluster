@@ -8,6 +8,10 @@ module "eks" {
     Environment = "training"
     GithubRepo = "terraform-aws-eks"
     GithubOrg = "terraform-aws-modules"
+
+//    https://docs.aws.amazon.com/eks/latest/userguide/cluster-autoscaler.html#ca-prerequisites
+    "k8s.io/cluster-autoscaler/${local.cluster_name}" = "owned"
+    "k8s.io/cluster-autoscaler/enabled" = "TRUE"
   }
 
   vpc_id = module.vpc.vpc_id
