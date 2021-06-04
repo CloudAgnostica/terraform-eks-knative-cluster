@@ -1,15 +1,21 @@
-# EKS provisioner & Knative setup
+# EKS, Knative, & Cluster autoscaling
 
-Create a Knative EKS EC2 spot instance cluster with request-based cluster autoscaling.
+Create a Knative EKS with request-based cluster autoscaling.
 
-## CI/CD tools
+## CI/CD tooling
 
 - https://redhat-developer-demos.github.io/knative-tutorial/knative-tutorial/setup/setup.html#tools
 
 
-## CI/CD creation pipeline
+## Resource creation CI/CD stages
 
-- Create EKS cluster
+Key stages:
+
+- keypair creation (not idempotent), 
+- Terraform EKS cluster creation, 
+- Knative install with HPA,
+- Deploy microservices,
+- Deploy cluster autoscaling
 
 ```
 aws ec2 create-key-pair --key-name innovation
@@ -26,24 +32,33 @@ aws eks --region $(terraform output -raw region) update-kubeconfig --name $(terr
 
 ```
 
+See Knative HPA in action:
+[![See Knative HPA in action](http://img.youtube.com/vi/qIJunS2pDTA/0.jpg)](https://youtu.be/qIJunS2pDTA?t=170)
 
-## Spot implementation
+### EKS Cluster Autoscaling
+
+1. Verify EKS cluster created by Terraform has [cluster autoscaler tagging](https://docs.aws.amazon.com/eks/latest/userguide/cluster-autoscaler.html#ca-prerequisites)
+2. Watch the nodes:
+```
+watch kubectl get nodes
+
+```
+3. Create IAM and deploy cluster autoscaling using [steps here](https://docs.aws.amazon.com/eks/latest/userguide/cluster-autoscaler.html#ca-create-policy)
+4. Watch the node count drop.
+
+
+
+## Resource cleanup CI/CD stages
+
+High-level stages:
+
+ - Delete ALB, IGW, SGs by deleting Knative sample microservices K8s resources
+ - terraform destroy
+
+## Fun to follow...
+
+### Spot implementation
 
 ```
 ./price_introspection.sh
 ```
-
-## CI/CD deletion pipeline
-
- - Delete ALB, IGW, SGs,
- - Terraform destroy
-
-```
-terraform destroy
-```
-
-## Upstream README
-### Learn Terraform - Provision an EKS Cluster
-
-This repo is a companion repo to the [Provision an EKS Cluster learn guide](https://learn.hashicorp.com/terraform/kubernetes/provision-eks-cluster), containing
-Terraform configuration files to provision an EKS cluster on AWS.
