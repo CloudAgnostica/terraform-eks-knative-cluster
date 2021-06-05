@@ -1,6 +1,6 @@
 # EKS, Knative, & Cluster autoscaling
 
-Create a Knative EKS with request-based cluster autoscaling.
+Create a Knative EKS cluster with cluster autoscaling.
 
 ## CI/CD tooling
 
@@ -11,9 +11,9 @@ Create a Knative EKS with request-based cluster autoscaling.
 
 Key stages:
 
-- keypair creation (not idempotent), 
+- keypair creation, 
 - Terraform EKS cluster creation, 
-- Knative install with HPA,
+- Setup Knative on the cluster,
 - Deploy microservices,
 - Deploy cluster autoscaling
 
@@ -33,6 +33,7 @@ aws eks --region $(terraform output -raw region) update-kubeconfig --name $(terr
 ```
 
 See Knative HPA in action:
+
 [![See Knative HPA in action](http://img.youtube.com/vi/qIJunS2pDTA/0.jpg)](https://youtu.be/qIJunS2pDTA?t=170)
 
 ### EKS Cluster Autoscaling
@@ -55,6 +56,7 @@ High-level stages:
 
  - Delete ALB, IGW, SGs by deleting Knative sample microservices K8s resources
  - terraform destroy
+ - delete innovation keypair
 
 ## Fun to follow...
 
