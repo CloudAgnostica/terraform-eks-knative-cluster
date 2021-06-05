@@ -46,7 +46,7 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/autoscaler/master/
 ```
 
 
-- This may cause: error: --overwrite is false but found the following declared annotation(s): 'eks.amazonaws.com/role-arn' already has a value (arn:aws:iam::534648894206:role/eksctl-innovation-eks-GfURKxDq-addon-iamserv-Role1-1CVZH5BJNHYC1)
+- This may cause an error: --overwrite is false but found the following declared annotation(s): 'eks.amazonaws.com/role-arn' already has a value (arn:aws:iam::XXXXXX:role/eksctl-innovation-eks-GfURKxDq-addon-iamserv-Role1-1CVZH5BJNHYC1)
 ```
 kubectl annotate serviceaccount cluster-autoscaler \
   -n kube-system \
