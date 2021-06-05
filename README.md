@@ -37,14 +37,15 @@ See Knative HPA in action:
 
 ### EKS Cluster Autoscaling
 
-1. Verify EKS cluster created by Terraform has [cluster autoscaler tagging](https://docs.aws.amazon.com/eks/latest/userguide/cluster-autoscaler.html#ca-prerequisites)
-2. Watch the nodes:
+- Verify EKS cluster created by Terraform has [cluster autoscaler tagging](https://docs.aws.amazon.com/eks/latest/userguide/cluster-autoscaler.html#ca-prerequisites)
+- Watch the nodes (separate terminal tab):
 ```
 watch kubectl get nodes
 
 ```
-3. Create IAM and deploy cluster autoscaling using [steps here](https://docs.aws.amazon.com/eks/latest/userguide/cluster-autoscaler.html#ca-create-policy)
-4. Watch the node count drop.
+- Follow cluster autoscaling steps [here](README.ca.md)
+  
+- Watch the node count drop.
 
 
 
